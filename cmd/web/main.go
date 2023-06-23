@@ -5,6 +5,8 @@ import (
 	"github.com/SeatSnobAri/seatflipsite/internal/config"
 	"github.com/SeatSnobAri/seatflipsite/internal/handlers"
 	"github.com/SeatSnobAri/seatflipsite/internal/models"
+	"github.com/alexedwards/scs/v2"
+	"github.com/pusher/pusher-http-go/v5"
 	"log"
 	"net/http"
 	"os"

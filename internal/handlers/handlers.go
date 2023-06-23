@@ -14,6 +14,7 @@ import (
 	"github.com/SeatSnobAri/seatflipsite/internal/repository"
 	"github.com/SeatSnobAri/seatflipsite/internal/repository/dbrepo"
 	"github.com/SeatSnobAri/seatflipsite/internal/templates"
+	"github.com/redis/go-redis/v9"
 	"log"
 	"net/http"
 	"strconv"

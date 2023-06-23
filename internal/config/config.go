@@ -2,6 +2,9 @@ package config
 
 import (
 	"github.com/SeatSnobAri/seatflipsite/internal/driver"
+	"github.com/alexedwards/scs/v2"
+	"github.com/pusher/pusher-http-go/v5"
+	"github.com/redis/go-redis/v9"
 	"html/template"
 )
 

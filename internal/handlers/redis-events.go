@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/SeatSnobAri/seatflipsite/internal/models"
+	"github.com/redis/go-redis/v9"
 )
 
 func (repo *DBRepo) RedisExpiry(pubsub *redis.PubSub) {
