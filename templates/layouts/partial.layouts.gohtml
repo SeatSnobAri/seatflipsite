@@ -1,0 +1,188 @@
+{{define "partial"}}
+<script src="/static/admin/js/pusher.min.js"></script>
+
+
+<script>
+    let attention = Prompt();
+
+    let pusher = new Pusher("{{index .PreferenceMap "pusher-key"}}", {
+        channelAuthorization: { endpoint: "/pusher/auth"} ,
+        cluster: "mt1"
+        });
+
+    let publicChannel = pusher.subscribe("public-channel");
+    let privateChannel = pusher.subscribe("private-channel-{{.User.ID}}")
+
+
+    publicChannel.bind("produce", function(data){
+        let tableRef = document.getElementById('purchase-table')
+
+        let newRow = tableRef.tBodies[0].insertRow(-1)
+        newRow.classList.add('dataRow')
+        newRow.setAttribute("id", data.uuid)
+
+        let newCell = newRow.insertCell(0);
+        let newText = document.createTextNode(data.event_date);
+        newCell.appendChild(newText);
+
+        newCell = newRow.insertCell(1)
+        newText = document.createTextNode(data.event_name);
+        newCell.appendChild(newText);
+
+        newCell = newRow.insertCell(2)
+        newText = document.createTextNode(data.event_venue);
+        newCell.appendChild(newText);
+
+        newCell = newRow.insertCell(3)
+        newText = document.createTextNode(data.seat_info);
+        newCell.appendChild(newText);
+
+        newCell = newRow.insertCell(4)
+        newText = document.createTextNode(data.ticket_info);
+        newCell.appendChild(newText);
+
+        newCell = newRow.insertCell(5)
+        newText = document.createTextNode(data.ticket_price);
+        newCell.appendChild(newText);
+
+        newCell = newRow.insertCell(6)
+        newText = document.createTextNode(data.ticket_total);
+        newCell.appendChild(newText);
+
+        newCell = newRow.insertCell(7)
+        if (data.buy === "false"){
+            let newButton = document.createElement('button')
+            newButton.classList.add("btn", "btn-outline-light", "btn-sm")
+            newButton.dataset.id = data.uuid
+            newButton.dataset.event = data.event_name
+            newButton.dataset.price = data.ticket_total
+            newButton.textContent="BUY"
+            newCell.appendChild(newButton)
+
+        }else{
+            let bought = document.createElement('span')
+            bought.style.backgroundColor='green'
+            bought.innerText="BOUGHT"
+            newCell.appendChild(newText);
+        }
+
+        newCell = newRow.insertCell(8)
+        newText = document.createTextNode(data.stock_type);
+        newCell.appendChild(newText);
+
+    })
+
+    publicChannel.bind("expired-row", function(data){
+        // alert user to status change with toast
+        attention.toast({
+            msg: data.del,
+            icon: 'info',
+            timer: 30000,
+            showCloseButton: true,
+        })
+        let rowExists= !!document.getElementById(data.del)
+        if(rowExists){
+            let row = document.getElementById(data.del)
+            row.parentNode.removeChild(row)
+        }
+    })
+
+    privateChannel.bind("current-redis", function(data){
+        let tableRef = document.getElementById('purchase-table')
+
+        let newRow = tableRef.tBodies[0].insertRow(-1)
+        newRow.classList.add('dataRow')
+        newRow.setAttribute("id", data.uuid)
+
+        let newCell = newRow.insertCell(0);
+        let newText = document.createTextNode(data.event_date);
+        newCell.appendChild(newText);
+
+        newCell = newRow.insertCell(1)
+        newText = document.createTextNode(data.event_name);
+        newCell.appendChild(newText);
+
+        newCell = newRow.insertCell(2)
+        newText = document.createTextNode(data.event_venue);
+        newCell.appendChild(newText);
+
+        newCell = newRow.insertCell(3)
+        newText = document.createTextNode(data.seat_info);
+        newCell.appendChild(newText);
+
+        newCell = newRow.insertCell(4)
+        newText = document.createTextNode(data.ticket_info);
+        newCell.appendChild(newText);
+
+        newCell = newRow.insertCell(5)
+        newText = document.createTextNode(data.ticket_price);
+        newCell.appendChild(newText);
+
+        newCell = newRow.insertCell(6)
+        newText = document.createTextNode(data.ticket_total);
+        newCell.appendChild(newText);
+
+        newCell = newRow.insertCell(7)
+        if (data.buy === "false"){
+            let newButton = document.createElement('button')
+            newButton.classList.add("btn", "btn-outline-light", "btn-sm")
+            newButton.dataset.id = data.uuid
+            newButton.dataset.event = data.event_name
+            newButton.dataset.price = data.ticket_total
+            newButton.textContent="BUY"
+            newCell.appendChild(newButton)
+
+        }else{
+            let bought = document.createElement('span')
+            bought.style.backgroundColor='green'
+            bought.innerText="BOUGHT"
+            newCell.appendChild(newText);
+        }
+
+        newCell = newRow.insertCell(8)
+        newText = document.createTextNode(data.stock_type);
+        newCell.appendChild(newText);
+
+    })
+
+
+
+
+    // (function () {
+    //     'use strict';
+    //     window.addEventListener('load', function () {
+    //         // Fetch all the forms we want to apply custom Bootstrap validation styles to
+    //         let forms = document.getElementsByClassName('needs-validation');
+    //         // Loop over them and prevent submission
+    //         Array.prototype.filter.call(forms, function (form) {
+    //             form.addEventListener('submit', function (event) {
+    //                 if (form.checkValidity() === false) {
+    //                     event.preventDefault();
+    //                     event.stopPropagation();
+    //                 }
+    //                 form.classList.add('was-validated');
+    //             }, false);
+    //         });
+    //     }, false);
+    // })();
+
+    {{with .Flash}}
+    successAlert('{{.}}')
+    {{end}}
+
+    {{with .Warning}}
+    warningAlert('{{.}}')
+    {{end}}
+
+    {{with .Error}}
+    errorAlert('{{.}}')
+    {{end}}
+
+
+
+
+
+
+</script>
+
+{{end}}

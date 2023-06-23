@@ -1,0 +1,157 @@
+{{template "base" .}}
+
+{{define "content" }}
+        {{$rows := index .Data "rows"}}
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <h1 class="mt-5">Seat Ninjas </h1>
+                <hr>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="mt-1 tb" style="outline: 1px solid silver; padding: 2em;">
+                    <table class="table table-striped table-condensed table-dark" id="purchase-table">
+                        <thead class="myHead">
+                            <tr class="myRow">
+                                <th>Event Date</th>
+                                <th>Event Name</th>
+                                <th>Event Venue</th>
+                                <th>Seat Info</th>
+                                <th>Ticket Info</th>
+                                <th>Ticket Price</th>
+                                <th>Ticket Total</th>
+                                <th>Buy?</th>
+                                <th>Stock Type</th>
+                            </tr>
+                        </thead>
+                        <tbody  id="data">
+                        {{range $rows}}
+                            <tr id="{{.UUID}}">
+                                <td>{{.EventDate}}</td>
+                                <td>{{.EventName}}</td>
+                                <td>{{.EventVenue}}</td>
+                                <td>{{.SeatInfo}}</td>
+                                <td>{{.TicketInfo}}</td>
+                                <td>{{.TicketPrice}}</td>
+                                <td>{{.TicketTotal}}</td>
+                                <td>
+                                    {{if not .Buy }}
+                                        <button class="btn btn-outline-light btn-sm" data-id="{{.UUID}}"
+                                            data-event="{{.EventName}}" data-price="{{.TicketTotal}}">
+                                                BUY
+                                        </button>
+                                    {{else}}
+                                        <span style="background-color: green">BOUGHT</span>
+                                     {{end}}
+                                </td>
+                                <td>{{.StockType}}</td>
+                            </tr>
+
+                        {{end}}
+
+
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+    </div>
+
+
+{{end}}
+
+{{define "js"}}
+    {{$user := index .Data "user"}}
+
+    <script>
+
+    let table = document.getElementById("data")
+    table.addEventListener("click", function(e){
+        if(e.target.localName!=="button"){
+            return
+        }
+        attention.custom({
+            title: `Are you sure you want to buy?`,
+            msg: `<div>
+                    <p style="whitespace: nowrap;">${e.target.dataset.event}</p>
+                    <p>for ${e.target.dataset.price} ?</p>
+                    </div>`,
+            callback: function(result) {
+                console.log(result)
+                if (result){
+                    const headers = new Headers()
+                    headers.append("Content-Type", "application/json")
+
+                    let body = {
+                        action: "buy",
+                        buy: {
+                            buy: true,
+                            uuid: e.target.dataset.id
+                        }
+                    }
+                    const requestOptions = {
+                        method: "POST",
+                        headers: headers,
+                        body: JSON.stringify(body)
+                    }
+                    fetch(`http://localhost:4000/broker`, requestOptions)
+                        .then(response => response.json())
+                        .then((data) => {
+                            if(data.error){
+                                console.log(data)
+                                return
+                            }else{
+                                let tr = document.getElementById(e.target.dataset.id)
+                                tr.style.backgroundColor = 'rgba(134, 88, 165, 0.3)'
+                                let button = tr.querySelector("button")
+                                let td= button.parentNode
+                                button.parentNode.removeChild(button)
+                                let bought = document.createElement('span')
+                                bought.style.backgroundColor='green'
+                                bought.innerText="BOUGHT"
+                                td.append(bought)
+
+
+                            }
+                        })
+                        .catch(error => {
+                            console.log(error)
+                        })
+                        }
+                // }else{
+                //     const headers = new Headers()
+                //     headers.append("Content-Type", "application/json")
+                //     let body = {
+                //         action: "delete",
+                //         delete: {
+                //             key: e.target.dataset.id
+                //         }
+                //     }
+                //     const requestOptions = {
+                //         method: "POST",
+                //         headers: headers,
+                //         body: JSON.stringify(body)
+                //     }
+                //     fetch(`https://localhost:4000/broker`, requestOptions)
+                //         .then(response => response.json())
+                //         .then((data) => {
+                //             if(data.error){
+                //                 console.log(data)
+                //             }else{
+                //                 let tr = document.getElementById(e.target.dataset.id)
+                //                 tr.remove()
+                //             }
+                //         })
+                //         .catch(error => {
+                //             console.log(error)
+                //         })
+                // }
+            }})
+    })
+
+
+    </script>
+{{end}}

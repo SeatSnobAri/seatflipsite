@@ -1,0 +1,16 @@
+create_table("users") {
+  t.Column("id", "string", {primary: true})
+  t.Column("first_name", "string", {"size": 255})
+  t.Column("last_name", "string", {"size": 255})
+  t.Column("email", "string", {})
+  t.Column("photo", "string", {"size": 255})
+  t.Column("provider", "string", {"size": 255})
+}
+
+sql("alter table users alter column created_at set default now();")
+sql("alter table users alter column updated_at set default now();")
+
+sql(`CREATE TRIGGER set_timestamp
+    BEFORE UPDATE ON users
+    FOR EACH ROW
+EXECUTE PROCEDURE trigger_set_timestamp()`);
