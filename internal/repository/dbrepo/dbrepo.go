@@ -2,8 +2,8 @@ package dbrepo
 
 import (
 	"database/sql"
-	"github.com/SeatSnobAri/seatflip2.0/internal/config"
-	"github.com/SeatSnobAri/seatflip2.0/internal/repository"
+	"github.com/SeatSnobAri/seatflipsite/internal/config"
+	"github.com/SeatSnobAri/seatflipsite/internal/repository"
 )
 
 var app *config.AppConfig

@@ -2,9 +2,9 @@ package main
 
 import (
 	"fmt"
+	"github.com/SeatSnobAri/seatflipsite/internal/helpers"
 	"github.com/justinas/nosurf"
 	"net/http"
-	"seatflip2.0/internal/helpers"
 	"strconv"
 	"strings"
 	"time"

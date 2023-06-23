@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/SeatSnobAri/seatflip2.0/internal/handlers"
+	"github.com/SeatSnobAri/seatflipsite/internal/handlers"
 	"github.com/go-chi/cors"
 	"net/http"
 )

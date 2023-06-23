@@ -1,8 +1,8 @@
 package templates
 
 import (
-	"github.com/SeatSnobAri/seatflip2.0/internal/forms"
-	"github.com/SeatSnobAri/seatflip2.0/internal/models"
+	"github.com/SeatSnobAri/seatflipsite/internal/forms"
+	"github.com/SeatSnobAri/seatflipsite/internal/models"
 )
 
 // TemplateData holds data sent from handlers to templates

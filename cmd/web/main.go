@@ -2,9 +2,9 @@ package main
 
 import (
 	"encoding/gob"
-	"github.com/SeatSnobAri/seatflip/internal/config"
-	"github.com/SeatSnobAri/seatflip/internal/handlers"
-	"github.com/SeatSnobAri/seatflip/internal/models"
+	"github.com/SeatSnobAri/seatflipsite/internal/config"
+	"github.com/SeatSnobAri/seatflipsite/internal/handlers"
+	"github.com/SeatSnobAri/seatflipsite/internal/models"
 	"log"
 	"net/http"
 	"os"

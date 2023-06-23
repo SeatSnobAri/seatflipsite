@@ -4,9 +4,9 @@ import (
 	"bytes"
 	"errors"
 	"fmt"
-	"github.com/SeatSnobAri/seatflip2.0/internal/config"
-	"github.com/SeatSnobAri/seatflip2.0/internal/helpers"
-	"github.com/SeatSnobAri/seatflip2.0/internal/templates"
+	"github.com/SeatSnobAri/seatflipsite/internal/config"
+	"github.com/SeatSnobAri/seatflipsite/internal/helpers"
+	"github.com/SeatSnobAri/seatflipsite/internal/templates"
 
 	"html/template"
 	"log"

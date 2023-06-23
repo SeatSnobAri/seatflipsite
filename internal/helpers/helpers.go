@@ -4,9 +4,9 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"github.com/SeatSnobAri/seatflip2.0/internal/config"
-	"github.com/SeatSnobAri/seatflip2.0/internal/models"
-	"github.com/SeatSnobAri/seatflip2.0/internal/templates"
+	"github.com/SeatSnobAri/seatflipsite/internal/config"
+	"github.com/SeatSnobAri/seatflipsite/internal/models"
+	"github.com/SeatSnobAri/seatflipsite/internal/templates"
 	"github.com/justinas/nosurf"
 	"io"
 

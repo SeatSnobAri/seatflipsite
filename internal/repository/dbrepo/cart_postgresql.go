@@ -2,7 +2,7 @@ package dbrepo
 
 import (
 	"context"
-	"github.com/SeatSnobAri/seatflip2.0/internal/models"
+	"github.com/SeatSnobAri/seatflipsite/internal/models"
 	"strconv"
 	"strings"
 	"time"

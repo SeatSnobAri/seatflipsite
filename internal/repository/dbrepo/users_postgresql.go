@@ -3,7 +3,7 @@ package dbrepo
 import (
 	"context"
 	"database/sql"
-	"github.com/SeatSnobAri/seatflip2.0/internal/models"
+	"github.com/SeatSnobAri/seatflipsite/internal/models"
 	"golang.org/x/crypto/bcrypt"
 	"log"
 	"time"

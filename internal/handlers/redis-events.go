@@ -4,7 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"github.com/SeatSnobAri/seatflip2.0/internal/models"
+	"github.com/SeatSnobAri/seatflipsite/internal/models"
 )
 
 func (repo *DBRepo) RedisExpiry(pubsub *redis.PubSub) {
